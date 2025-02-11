@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "image": "https://pizzahouse82.ru/images/ip5_banner/12/1400х420_copy-min_mzcq-8x.jpg",
+    "name": "slider 1"
+  },
+  {
+    "id": "2",
+    "image": "https://i.pinimg.com/originals/2d/21/59/2d215904cbf25c01cfbe1485f37b300d.jpg",
+    "name": "slider 2"
+  },
+  {
+    "id": "3",
+    "image": "https://i.ytimg.com/vi/vAMonh5qyCk/maxresdefault.jpg",
+    "name": "slider 3"
+  },
+  {
+    "id": "4",
+    "image": "https://static.tildacdn.com/tild3434-3237-4632-a334-656565666565/8739347_1920.jpg",
+    "name": "slider 4"
+  }
+]
