@@ -5,10 +5,9 @@ function Categories() {
 
   const categories = [
     "Все",
-    "Итальянские",
-    "Русские",
-    "Американские",
-    "Японские",
+    "Острые",
+    "Мясные",
+    "Сырные",
   ];
 
   const onClickCategory = (index) => {
@@ -20,6 +19,7 @@ function Categories() {
       <ul>
         {categories.map((value, index) => (
           <li
+            key={value}
             onClick={() => onClickCategory(index)}
             className={active === index ? "active" : ""}
           >

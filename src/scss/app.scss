@@ -1,7 +1,7 @@
-@import 'variables';
-@import 'libs/normalize';
+@import "variables";
+@import "libs/normalize";
 
-@import 'components/all';
+@import "components/all";
 
 body {
   background-color: $background;
@@ -17,7 +17,6 @@ body {
 }
 
 .content {
-  
   &__title {
     margin: 35px 0;
   }
