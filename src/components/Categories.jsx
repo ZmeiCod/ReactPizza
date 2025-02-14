@@ -8,6 +8,9 @@ function Categories() {
     "Острые",
     "Мясные",
     "Сырные",
+    "Домашние",
+    "Натуральные",
+    "Вегетарианские",
   ];
 
   const onClickCategory = (index) => {

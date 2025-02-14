@@ -4,7 +4,7 @@ function Sorting() {
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = React.useState(0);
 
-  const list = ["популярности", "цене", "скидкам"];
+  const list = ["популярное", "цена", "скидка"];
 
   const onClickSelected = (index) => {
     setSelected(index)
@@ -26,7 +26,7 @@ function Sorting() {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
+        <b>Сортировка:</b>
         <span onClick={() => setOpen(!open)}>{list[selected]}</span>
       </div>
       {open && (
