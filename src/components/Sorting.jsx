@@ -1,21 +1,40 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setSorting } from "../redux/filter/slice";
 
-function Sorting({ value, onClickSorting }) {
+export const list = [
+  { id: "1", name: "популярное" },
+  { id: "2", name: "цена" },
+  { id: "3", name: "скидка" },
+];
+
+function Sorting() {
+  const dispatch = useDispatch();
+  const sorting = useSelector((state) => state.filter.sorting.name);
+  const sortingRef = React.useRef();
+
   const [open, setOpen] = React.useState(false);
 
-  const list = [
-    { name: "популярное", sortingName: 'rating'},
-    { name: "цена" },
-    { name: "скидка" },
-  ];
-
-  const onClickSelected = (index) => {
-    onClickSorting(index);
+  const onClickSelected = (obj) => {
+    dispatch(setSorting(obj));
     setOpen(false);
   };
 
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sortingRef.current && !sortingRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+    document.body.addEventListener("click", handleClickOutside);
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+  
+
   return (
-    <div className="sort">
+    <div ref={sortingRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
@@ -30,16 +49,16 @@ function Sorting({ value, onClickSorting }) {
           />
         </svg>
         <b>Сортировка:</b>
-        <span onClick={() => setOpen(!open)}>{list[value].name}</span>
+        <span onClick={() => setOpen(!open)}>{sorting}</span>
       </div>
       {open && (
         <div className="sort__popup">
           <ul>
-            {list.map((obj, index) => (
+            {list.map((obj) => (
               <li
-                key={obj.name}
-                onClick={() => onClickSelected(index)}
-                className={value === obj.name ? "active" : ""}
+                key={obj.id}
+                onClick={() => onClickSelected(obj)}
+                className={sorting === obj.name ? "active" : ""}
               >
                 {obj.name}
               </li>

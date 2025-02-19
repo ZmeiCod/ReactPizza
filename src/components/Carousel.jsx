@@ -19,7 +19,10 @@ export default function Carousel({ sliders }) {
                     className={`slider-list ${index === currentSlide ? 'active' : ''}`}
                     src={slide.image}
                     alt={slide.name}
-                    style={{ width: '100%', height: '400px', display: index === currentSlide ? 'block' : 'none' }}
+                    style={{
+                        display: index === currentSlide ? 'block' : 'none',
+                        objectFit: 'cover', // добавлено для сохранения соотношения сторон
+                    }}
                 />
             ))}
             <div className="slider-dots">

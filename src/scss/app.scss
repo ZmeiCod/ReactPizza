@@ -5,6 +5,16 @@
 
 body {
   background-color: $background;
+  &::-webkit-scrollbar {
+		width: 10px;
+	}
+	&::-webkit-scrollbar-track {
+		background: $black;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: $orange;
+		border-radius: 10px;
+	}
 }
 
 .wrapper {

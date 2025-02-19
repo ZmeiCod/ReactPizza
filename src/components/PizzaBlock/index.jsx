@@ -1,16 +1,25 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addItem } from '../../redux/cart/slice';
 
-function PizzaBlock({ imageUrl, title, price }) {
+function PizzaBlock({ id, imageUrl, title, price }) {
+  const dispatch = useDispatch()
+  const cartItem = useSelector(state => state.cart.items.find(obj => obj.id === id))
   const [productCount, setProductCount] = React.useState(0);
   const [size, setSize] = React.useState(30);
 
-  const calculatePrice = () => {
-    
-    if (size === 40) {
-      return (price * 1.1).toFixed(0);
-    }
-    return price;
-  };
+  const addedCount = cartItem ? cartItem.count : 0
+
+  const inClickAdd = () => {
+    const item = {
+      id,
+      title,
+      price,
+      imageUrl, 
+      size: size
+    };
+    dispatch(addItem(item))
+  }
 
   return (
     <div className="pizza-block-wrapper">
@@ -24,8 +33,8 @@ function PizzaBlock({ imageUrl, title, price }) {
         </ul>
       </div>
       <div className="pizza-block__bottom">
-        <div className="pizza-block__price">от {calculatePrice()} ₽</div>
-        <button onClick={() => setProductCount(productCount + 1)} className="button button--outline button--add">
+        <div className="pizza-block__price">от {price} ₽</div>
+        <button onClick={inClickAdd} className="button button--outline button--add">
           <svg
             width="12"
             height="12"
@@ -39,7 +48,7 @@ function PizzaBlock({ imageUrl, title, price }) {
             />
           </svg>
           <span>Добавить</span>
-          <i>{productCount}</i>
+          {addedCount > 0 && <i>{addedCount}</i>}
         </button>
       </div>
     </div>
