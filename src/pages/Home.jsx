@@ -1,5 +1,4 @@
 import React from "react";
-import "axios";
 import qs from "qs";
 import { Context } from "../App";
 import sliders from "../assets/sliders.json";
@@ -10,10 +9,11 @@ import PizzaBlock from "../components/PizzaBlock";
 import Categories from "../components/Categories";
 import Carousel from "../components/Carousel";
 import Skeleton from "../components/PizzaBlock/Skeleton";
-import { setCategoryId, setFilters} from "../redux/filter/slice";
+import { setCategoryId, setFilters } from "../redux/filter/slice";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import { fetchProduct } from "../redux/product/slice";
 
+import axios from "axios";
 export default function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ export default function Home() {
   const isSearch = React.useRef(false);
   const categoryId = useSelector((state) => state.filter.categoryId);
   const sorting = useSelector((state) => state.filter.sorting.name);
+  const products = useSelector((state) => state.product);
   const { searchValue } = React.useContext(Context);
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -29,26 +30,29 @@ export default function Home() {
     dispatch(setCategoryId(id));
   };
 
-  const getProduct = () => {
+  const getProduct = async () => {
     setIsLoading(true);
 
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     const search = searchValue ? `&search=${searchValue}` : "";
 
-    axios
-      .get(
-        `https://67992179be2191d708b21876.mockapi.io/api/main/items?${category}&sortBy=${sorting}&order=desc${search}`
-      )
-      .then((response) => {
-        const arr = response.data;
-        setItems(Array.isArray(arr) ? arr : []);
-      })
-      .catch(() => {
-        setItems([]);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      await axios
+    .get(
+      `https://67992179be2191d708b21876.mockapi.io/api/main/items?${category}&sortBy=${sorting}&order=desc${search}`
+    )
+    .then((response) => {
+      const arr = response.data;
+      setItems(Array.isArray(arr) ? arr : []);
+    })
+    .catch(() => {
+      setItems([]);
+    })
+    } catch (error) {
+      alert("Произошла ошибка при получении товаров");
+      console.log(error);
+    }
+    setIsLoading(false);
     window.scrollTo(0, 0);
   };
 
@@ -73,15 +77,14 @@ export default function Home() {
   }, [dispatch]);
 
   React.useEffect(() => {
-    getProduct(); // Запрос на получение данных при первом рендере
-  }, []); // Эффект вызывается только раз
+    getProduct();
+  }, []);
 
   React.useEffect(() => {
     if (!isSearch.current) {
       getProduct();
     }
     isSearch.current = false;
-
   }, [categoryId, sorting, searchValue]);
 
   const skeletons = [...new Array(8)].map((_, index) => (
