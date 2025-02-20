@@ -11,7 +11,6 @@ import Carousel from "../components/Carousel";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import { setCategoryId, setFilters } from "../redux/filter/slice";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchProduct } from "../redux/product/slice";
 
 import axios from "axios";
 export default function Home() {
@@ -21,7 +20,6 @@ export default function Home() {
   const isSearch = React.useRef(false);
   const categoryId = useSelector((state) => state.filter.categoryId);
   const sorting = useSelector((state) => state.filter.sorting.name);
-  const products = useSelector((state) => state.product);
   const { searchValue } = React.useContext(Context);
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
